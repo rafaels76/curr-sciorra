@@ -3,32 +3,32 @@
 define("ESPACIO", " ");
 
 $morseCodes = array(
-'A'=>'.-',
-'B'=>'-...',
-'C'=>'-.-.',
-'D'=>'-..',
-'E'=>'.',
-'F'=>'..-.',
-'G'=>'--.',
-'H'=>'....',
-'I'=>'..',
-'J'=>'.---',
-'K'=>'-.-',
-'L'=>'.-..',
-'M'=>'--',
-'N'=>'-.',
-'O'=>'---',
-'P'=>'.--.',
-'Q'=>'--.-',
-'R'=>'.-.',
-'S'=>'...',
-'T'=>'-',
-'U'=>'..-',
-'V'=>'...-',
-'W'=>'.--',
-'X'=>'-..-',
-'Y'=>'-.--',
-'Z'=>'--..',
+'a'=>'.-',
+'b'=>'-...',
+'c'=>'-.-.',
+'d'=>'-..',
+'e'=>'.',
+'f'=>'..-.',
+'Gg'=>'--.',
+'h'=>'....',
+'i'=>'..',
+'j'=>'.---',
+'k'=>'-.-',
+'l'=>'.-..',
+'m'=>'--',
+'n'=>'-.',
+'o'=>'---',
+'p'=>'.--.',
+'q'=>'--.-',
+'r'=>'.-.',
+'s'=>'...',
+'t'=>'-',
+'u'=>'..-',
+'v'=>'...-',
+'w'=>'.--',
+'x'=>'-..-',
+'y'=>'-.--',
+'z'=>'--..',
 '1'=>'.----',
 '2'=>'..---',
 '3'=>'...--',
@@ -48,36 +48,33 @@ $morseCodes = array(
 ')'=>'-.--.-' 
 );
 
-function encryptMorse($mensaje, $morseCodes){
-    $mensaje = strtoupper($mensaje);
-    $cipher = "";
-    for($i = 0; $i <= (strlen($mensaje) - 1); $i++){
-        $cipher .= $mensaje[$i] != " " ? $morseCodes[$mensaje[$i]] : " ";
+function encodeMorse($message, $morseCodes){
+    $morse = '';
+    $message = str_split(strtolower($message));
+    foreach ($message as $char) {
+        if (array_key_exists($char, $morseCodes)) {
+            $morse .= $morseCodes[$char];
+        }
+        $morse .= " ";
     }
-    return $cipher;
+    return $morse;
 }
 
-function decryptMorse($mensaje, $morseCodes){
-$message = " ";
-$decipher = "";
-$citext = "";
-
-for($i = 0; $i <= (strlen($mensaje) - 1); $i++){
-if($mensaje[$i] != " "){
-            $val = 0
-            $citext += letter
-        } else {
-           $val += 1
-
-            if($val == 2){
-                $decipher += " "
-            } else {
-                foreach($morseCodes as key => value in MORSE_CODE_DICT.items():
-                    if citext == value:
-                        decipher += key
-
-                citext = ""
+function decodeMorse($morse, $morseCodes){
+    $morseChars = explode(' ', $morse);
+    $message = "";
+    $arrayMorse = array_flip($morseCodes);
+    foreach ($morseChars as $char) {
+        if (array_key_exists($char, $arrayMorse)) {
+            $message .= strtr($char, $arrayMorse);
+        }
+      }
+    return  $message;
 }
-    return decipher
+$cero = "Rafael Sanchez";
+$uno = encodeMorse($cero, $morseCodes);
+echo $cero."\n";
+echo $uno."\n";
 
-echo encryptMorse("rafael", $morseCodes);
+$dos = decodeMorse($uno, $morseCodes);
+echo $dos;
